@@ -7,7 +7,9 @@
     android:layout_gravity="center"
     android:layout_width="200dp"
     android:layout_height="200dp"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="8dp"
+    card_view:cardUseCompatPadding="true"
     android:layout_margin="5dp">
 
     <RelativeLayout
@@ -18,16 +20,37 @@
 
         <ImageView
             android:id="@+id/cardViewImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
             android:foregroundGravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
             >
         </ImageView>
-        <TextView
-            android:id="@+id/cardViewImageUploader"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/cardViewImageLogo"
+                android:layout_marginLeft="10dp"
+                android:layout_width="70dp"
+                android:layout_height="15dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1.0"
+                 />
+            <TextView
+                android:id="@+id/cardViewImageUploader"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1.0"/>
+        </LinearLayout>
+
 
 </RelativeLayout>
 

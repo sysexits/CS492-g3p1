@@ -33,12 +33,21 @@ public class Tab2Fragment extends Fragment {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+        //https://api.imgur.com/oauth2/authorize?client_id=4398fec8945527e&response_type=token
 
         List<ImageInfo> imgurImages = new ArrayList<ImageInfo>();
         imgurImages.add(new ImageInfo("http://i.imgur.com/Jvh1OQm.jpg", "Neebus"));
         imgurImages.add(new ImageInfo("http://i.imgur.com/6RJmSPS.jpg", ""));
+        imgurImages.add(new ImageInfo("http://i.imgur.com/Jvh1OQm.jpg", "Neebus"));
+        imgurImages.add(new ImageInfo("http://i.imgur.com/6RJmSPS.jpg", ""));
+        imgurImages.add(new ImageInfo("http://i.imgur.com/Jvh1OQm.jpg", "Neebus"));
+        imgurImages.add(new ImageInfo("http://i.imgur.com/6RJmSPS.jpg", ""));
+        imgurImages.add(new ImageInfo("http://i.imgur.com/Jvh1OQm.jpg", "Neebus"));
+        imgurImages.add(new ImageInfo("http://i.imgur.com/6RJmSPS.jpg", ""));
+        imgurImages.add(new ImageInfo("http://i.imgur.com/Jvh1OQm.jpg", "Neebus"));
+        imgurImages.add(new ImageInfo("http://i.imgur.com/6RJmSPS.jpg", ""));
 
-        mAdapter = new ImageAdapter(imgurImages);
+        mAdapter = new ImageAdapter(this.getContext(), imgurImages);
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }

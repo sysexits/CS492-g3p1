@@ -1,5 +1,8 @@
 package cs492.kaist.org.helloworld;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v7.widget.CardView;
@@ -10,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
@@ -19,9 +25,11 @@ import java.util.List;
  */
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder>{
     private List<ImageInfo> imageList;
+    private Context mContext;
 
-    public ImageAdapter(List<ImageInfo> imageList) {
+    public ImageAdapter(Context context, List<ImageInfo> imageList) {
         this.imageList = imageList;
+        this.mContext = context;
     }
 
     @Override
@@ -32,11 +40,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(ImageViewHolder imageViewHolder, int i) {
         ImageInfo ii = imageList.get(i);
-        Drawable image = LoadImageFromUrl(ii.url);
-
-        System.out.println(ii.url + " " + ii.uploader);
-
-        imageViewHolder.vImage.setImageDrawable(image);
+        Picasso.with(mContext).load(ii.url).fit().centerCrop().into(imageViewHolder.vImage);
+        Picasso.with(mContext).load(R.drawable.logo).fit().centerCrop().into(imageViewHolder.vLogo);
         imageViewHolder.vUploader.setText(ii.uploader);
     }
 
@@ -63,11 +68,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
         protected ImageView vImage;
+        protected ImageView vLogo;
         protected TextView vUploader;
 
         public ImageViewHolder(View v) {
             super(v);
             vImage = (ImageView) v.findViewById(R.id.cardViewImage);
+            vLogo = (ImageView) v.findViewById(R.id.cardViewImageLogo);
             vUploader = (TextView) v.findViewById(R.id.cardViewImageUploader);
         }
     }
