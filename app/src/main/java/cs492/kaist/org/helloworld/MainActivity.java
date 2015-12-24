@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTabsAdapter.addFragment(new Tab1Fragment(), "A Fragment");
         mTabsAdapter.addFragment(new Tab2Fragment(), "B Fragment");
+        mTabsAdapter.addFragment(new Tab3Fragment(), "C Fragment");
 
         tabsviewPager.setAdapter(mTabsAdapter);
 
