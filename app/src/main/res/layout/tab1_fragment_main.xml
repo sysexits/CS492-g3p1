@@ -4,6 +4,6 @@
 
     <ListView
         android:id="@+id/tab1ListView"
-        android:layout_width="10dp"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"></ListView>
 </RelativeLayout>
