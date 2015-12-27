@@ -1,10 +1,8 @@
 package cs492.kaist.org.helloworld;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,7 +39,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public void onBindViewHolder(ImageViewHolder imageViewHolder, int i) {
         ImageInfo ii = imageList.get(i);
         Picasso.with(mContext).load(ii.url).fit().centerCrop().into(imageViewHolder.vImage);
-        Picasso.with(mContext).load(R.drawable.logo).fit().centerCrop().into(imageViewHolder.vLogo);
+        Picasso.with(mContext).load(R.drawable.logo).fit().centerInside().into(imageViewHolder.vLogo);
         imageViewHolder.vUploader.setText(ii.uploader);
     }
 
@@ -52,9 +50,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 inflate(R.layout.img_cardview, viewGroup, false);
         CardView cardView = (CardView) itemView;
         cardView.setPreventCornerOverlap(false);
-        return new ImageViewHolder(itemView);
-    }
 
+        return new ImageViewHolder(itemView, mContext, imageList);
+    }
 
     public static Drawable LoadImageFromUrl(String url) {
         try {
@@ -70,12 +68,28 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         protected ImageView vImage;
         protected ImageView vLogo;
         protected TextView vUploader;
+        protected List<ImageInfo> vImageList;
+        protected Context mContext;
 
-        public ImageViewHolder(View v) {
+        public ImageViewHolder(View v, final Context mContext, List<ImageInfo> imageList) {
             super(v);
             vImage = (ImageView) v.findViewById(R.id.cardViewImage);
             vLogo = (ImageView) v.findViewById(R.id.cardViewImageLogo);
             vUploader = (TextView) v.findViewById(R.id.cardViewImageUploader);
+            vImageList = imageList;
+            this.mContext = mContext;
+
+            v.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Intent imageIntent = new Intent(mContext, ImageViewer.class);
+                    String url = vImageList.get(position).url;
+                    imageIntent.putExtra("url", url);
+
+                    mContext.startActivity(imageIntent);
+                }
+            });
         }
     }
 }

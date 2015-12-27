@@ -47,6 +47,8 @@
                 android:layout_width="125dp"
                 android:layout_height="50dp"
                 android:gravity="center"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1.0"/>
         </LinearLayout>
