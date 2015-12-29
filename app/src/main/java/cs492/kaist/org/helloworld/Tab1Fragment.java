@@ -53,9 +53,11 @@ public class Tab1Fragment extends Fragment {
                 int itm = (int) parent.getItemAtPosition(position);
                 switch (itm) {
                     case 0:
-                        Toast.makeText(getActivity().getApplicationContext(), "case 0", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getActivity(), Tab1Fragment_new.class);
-                        startActivity(intent);
+                        //Toast.makeText(getActivity().getApplicationContext(), "case 0", Toast.LENGTH_LONG).show();
+                        //Intent intent = new Intent(getActivity(), Tab1Fragment_new.class);
+                        //startActivity(intent);
+                        break;
+                    default:
                         break;
                 }
 

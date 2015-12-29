@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:marginTop="10dp">
+        android:layout_marginTop="10dp">
         <ImageView
             android:id="@+id/btnNewGame"
             android:layout_width="50dp"
