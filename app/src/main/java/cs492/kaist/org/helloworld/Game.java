@@ -32,4 +32,14 @@ public class Game {
         board = new int[height * width];
 
     }
+
+    private void fillMines(int num)
+    {
+        int count = 0;
+        while (count < num)
+        {
+            count ++;
+        }
+
+    }
 }
