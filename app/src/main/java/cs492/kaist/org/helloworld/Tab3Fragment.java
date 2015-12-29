@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,15 @@ public class Tab3Fragment extends Fragment {
                 gridAdapter.notifyDataSetChanged();
             }
         });
+
+        Button newGame = (Button)view.findViewById(R.id.btnNewGame);
+        newGame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                game.Reset();
+                gridAdapter.notifyDataSetChanged();
+            }
+        });
+
 
 
         return view;
