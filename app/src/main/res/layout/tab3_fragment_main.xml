@@ -10,29 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
+        android:gravity="center"
+        android:marginTop="10dp">
+        <ImageView
             android:id="@+id/btnNewGame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="newgame"
-            android:layout_gravity="center"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="20dp">
         <GridView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/gridview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:columnWidth="30dp"
             android:numColumns="9"
             android:verticalSpacing="2dp"
             android:horizontalSpacing="2dp"
             android:stretchMode="none"
             android:gravity="center"
-            android:layout_centerInParent="true">
+            android:layout_centerHorizontal="true">
         </GridView>
 
     </RelativeLayout>

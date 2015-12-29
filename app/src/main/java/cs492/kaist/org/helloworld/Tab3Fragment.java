@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +25,9 @@ public class Tab3Fragment extends Fragment {
         // Required empty public constructor
     }
 
+    ImageView newGame;
+    Game game;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,8 +35,14 @@ public class Tab3Fragment extends Fragment {
     {
         View view = inflater.inflate(R.layout.tab3_fragment_main, container, false);
 
+        //Button newGame = (Button)view.findViewById(R.id.btnNewGame);
+        newGame = (ImageView)view.findViewById(R.id.btnNewGame);
+
+        Picasso.with(getContext()).load("http://weknowyourdreams.com/images/smile/smile-09.jpg").fit().centerCrop().into(newGame);
+        //http://www.clipartbest.com/cliparts/Kin/oyR/KinoyRpiq.jpeg
+
         GridView gridview = (GridView)view.findViewById(R.id.gridview);
-        final Game game = new Game();
+        game = new Game();
         gridAdapter = new GridAdapter(this.getContext(), game);
         gridview.setAdapter(gridAdapter);
 
@@ -45,6 +57,7 @@ public class Tab3Fragment extends Fragment {
                         Toast.makeText(getContext(), "Congratulations! You WIN!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getContext(), "You died :(", Toast.LENGTH_SHORT).show();
+                        Picasso.with(getContext()).load("http://www.clipartbest.com/cliparts/Kin/oyR/KinoyRpiq.jpeg").fit().centerCrop().into(newGame);
                     }
                 }
             }
@@ -57,13 +70,17 @@ public class Tab3Fragment extends Fragment {
                 return true;
             }
         });
-        Button newGame = (Button)view.findViewById(R.id.btnNewGame);
+
         newGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 game.Reset();
                 gridAdapter.notifyDataSetChanged();
+                Picasso.with(getContext()).load("http://weknowyourdreams.com/images/smile/smile-09.jpg").fit().centerCrop().into(newGame);
             }
         });
+
+
+
 
 
 
