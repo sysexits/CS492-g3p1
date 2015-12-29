@@ -29,7 +29,7 @@ public class Tab3Fragment extends Fragment {
         View view = inflater.inflate(R.layout.tab3_fragment_main, container, false);
 
         GridView gridview = (GridView)view.findViewById(R.id.gridview);
-        final Game game = new Game(9, 9, 9);
+        final Game game = new Game();
         gridAdapter = new GridAdapter(this.getContext(), game);
         gridview.setAdapter(gridAdapter);
 
