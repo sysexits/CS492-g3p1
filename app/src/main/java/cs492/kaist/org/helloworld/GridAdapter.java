@@ -43,54 +43,52 @@ public class GridAdapter extends BaseAdapter {
         Tile tile = game.board[position];
         if (convertView == null)
         {
-            int indicator = tile.indicator;
             textView = new TextView(mContext);
             textView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 100));
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(24);
+        }
+        else
+        {
+            textView = (TextView) convertView;
+        }
 
-            if (tile.clicked)
-            {
-                textView.setBackgroundColor(Color.parseColor("#ffffff"));
-            }
-            else
-            {
-                textView.setBackgroundColor(Color.parseColor("#cccccc"));
-            }
-
-            textView.setText(Integer.toString(indicator));
+        if (tile.clicked)
+        {
+            textView.setBackgroundColor(Color.parseColor("#ffffff"));
             if (tile.mined)
             {
-                textView.setText(Integer.toString(-1));
-            }
-            if (!tile.clicked)
-            {
-                textView.setText("");
+                textView.setBackgroundColor(Color.parseColor("#ff0000"));
             }
         }
         else
         {
-            int indicator = tile.indicator;
-            textView = (TextView) convertView;
-            if (tile.clicked)
-            {
-                textView.setBackgroundColor(Color.parseColor("#ffffff"));
-            }
-            else
-            {
-                textView.setBackgroundColor(Color.parseColor("#cccccc"));
-            }
-            textView.setText(Integer.toString(indicator));
-            if (tile.mined)
-            {
-                textView.setText(Integer.toString(-1));
-            }
-            if (!tile.clicked)
-            {
-                textView.setText("");
-            }
-
+            textView.setBackgroundColor(Color.parseColor("#cccccc"));
         }
+
+        int indicator = tile.indicator;
+        if (tile.flagged)
+        {
+            textView.setText("F");
+        }
+        else if (!tile.clicked)
+        {
+            textView.setText("");
+        }
+        else if (tile.mined)
+        {
+            textView.setText("X");
+        }
+        else if (indicator == 0)
+        {
+            textView.setText(".");
+        }
+        else
+        {
+            textView.setText(Integer.toString(indicator));
+        }
+
+
 
         return textView;
     }

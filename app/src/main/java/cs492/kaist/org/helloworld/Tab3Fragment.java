@@ -39,9 +39,24 @@ public class Tab3Fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 game.click(position);
                 gridAdapter.notifyDataSetChanged();
+
+                if (game.isGameOver) {
+                    if (game.isVictory) {
+                        Toast.makeText(getContext(), "Congratulations! You WIN!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "You died :(", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
-
+        gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                game.longClick(position);
+                gridAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
         Button newGame = (Button)view.findViewById(R.id.btnNewGame);
         newGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

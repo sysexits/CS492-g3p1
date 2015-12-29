@@ -8,9 +8,9 @@ public class Game {
     public Tile[] board;
     private int height;
     private int width;
-    // board number code
-    // 0 ~ 8 : number
-    //
+    private int mines;
+    public boolean isGameOver;
+    public boolean isVictory;
 
     public Game(int x, int y, int mines)
     {
@@ -29,30 +29,110 @@ public class Game {
 
     public void click(int position)
     {
+        if (isGameOver)
+        {
+            return;
+        }
+        if (board[position].clicked)
+        {
+            return;
+        }
+        if (board[position].flagged)
+        {
+            return;
+        }
         board[position].clicked = true;
         if (board[position].mined)
         {
-            gameover();
+            loseGame();
+            return;
         }
-        propagate(position);
+        if (board[position].indicator == 0)
+        {
+            propagate(position);
+        }
         if (winCondition())
         {
+            isGameOver = true;
+            isVictory = true;
+        }
+    }
+
+    public void longClick(int position)
+    {
+        if (!board[position].clicked)
+        {
+            board[position].flagged ^= true;
 
         }
     }
 
     private void propagate(int position)
     {
+        if (position % width != 0) //if block is not on left
+        {
+            click(position - 1);
+        }
+        if (position % width != width - 1) // if block is not on right
+        {
+            click(position + 1);
+        }
+        if (position >= width) //if block is not on top
+        {
+            click(position - width);
+        }
+        if (position < board.length - width) // if block is not on bottom
+        {
+            click(position + width);
+        }
+        if (position % width != 0 && position >= width) // topleft
+        {
+            click(position - 1 - width);
+        }
+        if (position % width != 0 && position < board.length - width) //bottomleft
+        {
+            click(position - 1 + width);
+        }
+        if (position % width != width - 1 && position >= width) //topright
+        {
+            click(position + 1 - width);
+       }
+        if (position % width != width - 1 && position < board.length - width) //bottomright
+        {
+            click(position + 1 + width);
+        }
 
     }
 
-    private void gameover()
+    private void loseGame()
     {
-
+        for (int i = 0; i < board.length; i++)
+        {
+            if (board[i].mined)
+            {
+                click(i);
+            }
+        }
+        isGameOver = true;
     }
 
     private boolean winCondition()
     {
+        int count = 0;
+        for (Tile t : board)
+        {
+            if (!t.clicked)
+            {
+                if (!t.mined)
+                {
+                    return false;
+                }
+                count++;
+            }
+        }
+        if (count == mines) {
+            return true;
+        }
         return false;
     }
 
@@ -60,6 +140,9 @@ public class Game {
     {
         this.height = height;
         this.width = width;
+        this.mines = mines;
+        this.isGameOver = false;
+        this.isVictory = false;
         board = new Tile[height * width];
         for (int i = 0; i < height * width; i++)
         {

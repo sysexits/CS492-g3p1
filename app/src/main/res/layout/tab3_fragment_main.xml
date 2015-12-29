@@ -3,34 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <Button
             android:id="@+id/btnNewGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="newgame"/>
-        <Button
-            android:id="@+id/btnFlag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="flag"/>
+            android:text="newgame"
+            android:layout_gravity="center"/>
     </LinearLayout>
-    <GridView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/gridview"
-        android:columnWidth="30dp"
-        android:numColumns="9"
-        android:verticalSpacing="2dp"
-        android:horizontalSpacing="2dp"
-        android:stretchMode="none"
-        android:gravity="center"
-        android:layout_gravity="center">
-    </GridView>
+        android:layout_height="match_parent">
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/gridview"
+            android:columnWidth="30dp"
+            android:numColumns="9"
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="2dp"
+            android:stretchMode="none"
+            android:gravity="center"
+            android:layout_centerInParent="true">
+        </GridView>
+
+    </RelativeLayout>
+
 </LinearLayout>
