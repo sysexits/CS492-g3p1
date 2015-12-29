@@ -1,15 +1,18 @@
 package cs492.kaist.org.helloworld;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jaehyun Jang on 12/24/2015.
@@ -19,6 +22,14 @@ import android.widget.Toast;
  * Modified by Seungwoo Lee on 12/27/2015.
  */
 public class Tab1Fragment extends Fragment {
+    //URL to get JSON Array
+    private static String url = "http://cgv.kaist.ac.kr/~jaehyun/cs492/players.json";
+
+    //JSON Node Names
+    private static final String TAG_NAME = "name";
+    private static final String TAG_NUMBER = "number";
+    private static final String TAG_TEAM = "team";
+    private static final String TAG_URL = "url";
 
     public Tab1Fragment() {
     }
@@ -28,41 +39,61 @@ public class Tab1Fragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab1_fragment_main, container, false);
 
-        String[] Objects = new String[] {
-            "Apple", "Banana", "Crayon", "Dragon", "Eagle", "Fox", "Grape", "Hi", "Idle", "Jason", "Kyle", "Lenma", "MoMA", "Niels"
-        };
+        JSONParse jsonParse = new JSONParse();
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = jsonParse.execute(url).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
+        final ArrayList<Player> players = new ArrayList<Player>();
 
+        for(int i=0; i<jsonObject.length(); i++) {
+            JSONObject player = null;
+            String name = "";
+            String team = "";
+            String url = "";
+            String number = "";
+            try {
+                player = (JSONObject) jsonObject.get(Integer.toString(i));
+                name = player.getString("name");
+                team = player.getString("team");
+                url = player.getString("img");
+                number = player.getString("number");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Player playerStruct = new Player(name, team, number, url);
+            players.add(i,playerStruct);
+        }
 
-        ListView simpleList = (ListView)view.findViewById(R.id.tab1ListView);
+        PlayerAdapter adapter = new PlayerAdapter(getActivity(), players);
 
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, Objects);
-
+        ListView simpleList = (ListView) view.findViewById(R.id.tab1ListView);
         simpleList.setAdapter(adapter);
 
-
-        simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity().getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
-                int itm = (int) parent.getItemAtPosition(position);
-                switch (itm) {
-                    case 0:
-                        //Toast.makeText(getActivity().getApplicationContext(), "case 0", Toast.LENGTH_LONG).show();
-                        //Intent intent = new Intent(getActivity(), Tab1Fragment_new.class);
-                        //startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-        });
         return view;
+    }
+
+    private class JSONParse extends AsyncTask<String, String, JSONObject> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+            JSONObject json = null;
+            try {
+                JSONParser jParser = new JSONParser();
+                // Getting JSON from URL
+                json = jParser.getJSONFromUrl(url);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return json;
+        }
     }
 }
